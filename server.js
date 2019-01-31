@@ -26,3 +26,36 @@ app.post("/api/tables", function(req, res) {
   });
 });
 
+// get tables that have their isWaiting value set equal to true (AKA the waiting list)
+app.get ("/api/waitlist", function(req, res) {
+  connection.query("SELECT * FROM tables WHERE isWaiting = TRUE", function(err, dbTables) {
+    res.json(dbTables);
+  });
+});
+
+// Clear all of the existing tables
+app.delete("/api/tables", function(req, res) {
+  connection.query("DELETE FROM tables", function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
+// send my tables.html file at the path "/tables"
+app.get("/tables", function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/tables.html"));
+});
+
+// send my reserve.html file at the path "/reserve"
+app.get("/reserve", function(req, res) {
+  res.sendFile(path.join(__dirname, "./public/reserve.html"));
+});
+
+// set it up so that any other path will serve my home.html page
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirnamem, "./public/home.html"));
+});
+
+app.listen(PORT, function() {
+  console.log("The app is now listening on PORT: " + PORT);
+});
