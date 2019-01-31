@@ -53,7 +53,7 @@ app.get("/reserve", function(req, res) {
 
 // set it up so that any other path will serve my home.html page
 app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirnamem, "./public/home.html"));
+  res.sendFile(path.join(__dirname, "./public/home.html"));
 });
 
 app.listen(PORT, function() {
